@@ -1,0 +1,20 @@
+#!groovy
+// check server propreties
+propreties([disableConcurrentBuilds()])
+
+pipeline{
+  agent{
+    label 'master'
+  }
+  options{
+    buildDiscarder(logRotator(numTokeepStr:'10', artifactNumToKeepStr:'10'))
+    timestaps()
+  }
+  stages{
+    stage("First step"){
+      steps{
+        sh 'ssh root@docker \'hostname\''
+      }
+    }
+  }
+}
